@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PlaneSound.wav-d74dde175bf81b578ccbfa6b75b0351c.sample"
+
+[deps]
+
+source_file="res://PlaneSound.wav"
+dest_files=[ "res://.import/PlaneSound.wav-d74dde175bf81b578ccbfa6b75b0351c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

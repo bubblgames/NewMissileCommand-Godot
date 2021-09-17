@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/StartWave.wav-dea920743db080607e5815d72f5c09f1.sample"
+
+[deps]
+
+source_file="res://StartWave.wav"
+dest_files=[ "res://.import/StartWave.wav-dea920743db080607e5815d72f5c09f1.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

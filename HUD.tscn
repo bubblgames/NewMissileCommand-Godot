@@ -1,0 +1,152 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://HUD.gd" type="Script" id=1]
+[ext_resource path="res://ARCADECLASSIC.TTF" type="DynamicFontData" id=2]
+[ext_resource path="res://StartWave.wav" type="AudioStream" id=3]
+[ext_resource path="res://PointsCountSound.wav" type="AudioStream" id=4]
+[ext_resource path="res://MissileSprite.tscn" type="PackedScene" id=5]
+[ext_resource path="res://City/City.tscn" type="PackedScene" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = ExtResource( 2 )
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 1 )
+missileSprite = ExtResource( 5 )
+city = ExtResource( 6 )
+
+[node name="CurrentScore" type="Label" parent="."]
+margin_left = 134.0
+margin_right = 296.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HighScore" type="Label" parent="."]
+anchor_right = 1.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 1 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EndOfWaveContent" type="Node" parent="."]
+
+[node name="BonusPoints" type="Label" parent="EndOfWaveContent"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -2.00702
+margin_top = -109.427
+margin_right = -2.00702
+margin_bottom = -76.4269
+custom_fonts/font = SubResource( 2 )
+text = "Bonus       Points"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MissilesScore" type="Label" parent="EndOfWaveContent"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 288.0
+margin_top = -57.0
+margin_right = -389.0
+margin_bottom = -21.2103
+custom_fonts/font = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CitiesScore" type="Label" parent="EndOfWaveContent"]
+anchor_left = -0.00160049
+anchor_top = 0.498933
+anchor_right = 0.998399
+anchor_bottom = 0.498933
+margin_left = 289.28
+margin_top = -13.7546
+margin_right = -401.72
+margin_bottom = 21.2454
+custom_fonts/font = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewCityText" type="Label" parent="EndOfWaveContent"]
+margin_left = 326.503
+margin_top = 414.211
+margin_right = 464.503
+margin_bottom = 447.211
+custom_fonts/font = SubResource( 4 )
+text = "New   City"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartOfWaveContent" type="Node" parent="."]
+
+[node name="WaveText" type="Label" parent="StartOfWaveContent"]
+anchor_right = 1.0
+margin_left = 0.640198
+margin_top = 159.41
+margin_right = 0.640198
+margin_bottom = 192.41
+custom_fonts/font = SubResource( 3 )
+text = "Wave          1"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PointsText" type="Label" parent="StartOfWaveContent"]
+visible = false
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -0.640198
+margin_top = -16.5
+margin_right = -0.640198
+margin_bottom = 16.5
+custom_fonts/font = SubResource( 3 )
+text = "3          x          Points"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DefendCitiesText" type="Label" parent="StartOfWaveContent"]
+margin_left = -0.560852
+margin_top = 415.466
+margin_right = 797.439
+margin_bottom = 454.466
+custom_fonts/font = SubResource( 3 )
+text = "Defend                                              Cities"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartWaveAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+volume_db = -20.0
+
+[node name="PointsCountAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )

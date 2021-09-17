@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PointsCountSound.wav-e9674a453f44c892c918a222b0f0f2e5.sample"
+
+[deps]
+
+source_file="res://PointsCountSound.wav"
+dest_files=[ "res://.import/PointsCountSound.wav-e9674a453f44c892c918a222b0f0f2e5.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
