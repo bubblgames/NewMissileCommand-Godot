@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "Area2D",
 "class": "Cannon",
 "language": "GDScript",
-"path": "res://Cannon/Cannon.gd"
+"path": "res://src/MainGame/Entities/Cannon/Cannon.gd"
 }, {
 "base": "Area2D",
 "class": "Explosion",
 "language": "GDScript",
-"path": "res://Explosion/Explosion.gd"
+"path": "res://src/MainGame/Entities/Explosion/Explosion.gd"
 } ]
 _global_script_class_icons={
 "Cannon": "",
@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="NewMissileCommand"
-run/main_scene="res://GameManager.tscn"
+run/main_scene="res://src/GameManager.tscn"
 config/icon="res://icon.png"
 
 [display]

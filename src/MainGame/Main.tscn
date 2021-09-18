@@ -1,0 +1,163 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://src/MainGame/Main.gd" type="Script" id=1]
+[ext_resource path="res://src/MainGame/Entities/Missile/Trail.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/MainGame/Entities/Explosion/Explosion.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/MainGame/UI/Background/Ground.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/MainGame/Entities/City/City.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/MainGame/Entities/Cannon/Cannon.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/MainGame/UI/HUD.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/MainGame/Entities/Missile/MissileController.gd" type="Script" id=8]
+[ext_resource path="res://src/MainGame/Entities/Explosion/Explosion.wav" type="AudioStream" id=9]
+[ext_resource path="res://src/MainGame/Entities/Spacecraft/Spacecraft.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/MainGame/Entities/City/CityController.gd" type="Script" id=11]
+[ext_resource path="res://src/MainGame/Entities/Cannon/CannonController.gd" type="Script" id=12]
+[ext_resource path="res://src/MainGame/Entities/Missile/Missile.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/MainGame/Entities/Smartbomb/Smartbomb.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/MainGame/UI/CityCreated.wav" type="AudioStream" id=16]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Area2D
+
+signal explode(x,y)
+signal missile_destroyed
+
+var MOVE_SPEED = 400
+var destination = Vector2(0,0)
+var destination_set = false
+var is_friendly = false
+var internalIndicator = null
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass
+
+func set_destination(dest):
+	destination = dest
+	look_at(destination)
+	destination_set = true
+	
+func set_indicator(indicator):
+	internalIndicator = indicator
+
+func set_color(color):
+	$Trail.default_color = color
+	
+func set_speed_multiplier(value):
+	MOVE_SPEED = MOVE_SPEED * value
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if (destination_set):
+		position = position.move_toward(destination, delta * MOVE_SPEED)
+		if (abs(position.x - destination.x) < 1 and abs(position.y - destination.y) < 1):
+			explode()
+	if (position.y > 526):
+		explode()
+
+func _on_MissileMob_area_entered(area):
+	if is_friendly and area.name == \"Explosion\":
+		pass
+	if not is_friendly and area.name == \"Spacecraft\":
+		pass
+	else:
+		explode()
+	
+func explode():
+	emit_signal(\"explode\", position.x, position.y)
+	if internalIndicator != null:
+		internalIndicator.queue_free()
+	if not is_friendly:
+		emit_signal(\"missile_destroyed\")
+	queue_free()
+"
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 2.05455
+height = 0.0
+
+[sub_resource type="PackedScene" id=3]
+_bundled = {
+"conn_count": 1,
+"conns": PoolIntArray( 0, 0, 17, 16, 2, 0 ),
+"editable_instances": [  ],
+"names": PoolStringArray( "FriendlyMissile", "position", "rotation", "linear_damp", "angular_damp", "collision_mask", "script", "__meta__", "missiles", "Area2D", "CollisionShape2D", "shape", "Trail", "points", "width", "default_color", "_on_MissileMob_area_entered", "area_entered" ),
+"node_count": 3,
+"node_paths": [  ],
+"nodes": PoolIntArray( -1, -1, 9, 0, -1, 7, 1, 0, 2, 1, 3, 2, 4, 2, 5, 3, 6, 4, 7, 5, 1, 8, 0, 0, 10, 10, -1, 3, 1, 6, 2, 1, 11, 7, 0, 0, 0, 2147483647, 12, 8, 3, 13, 9, 14, 10, 15, 11, 0 ),
+"variants": [ Vector2( -0.266708, -0.171097 ), 1.5708, 0.0, 0, SubResource( 1 ), {
+"_edit_group_": true
+}, Vector2( -0.443, 0 ), SubResource( 2 ), ExtResource( 2 ), PoolVector2Array( 138.726, -544.199 ), 1.0, Color( 0, 1, 0, 1 ) ],
+"version": 2
+}
+
+[node name="Main" type="Node"]
+script = ExtResource( 1 )
+MissileMob = SubResource( 3 )
+Explosion = ExtResource( 3 )
+
+[node name="CityController" type="Node" parent="."]
+script = ExtResource( 11 )
+City = ExtResource( 5 )
+
+[node name="Ground" parent="." instance=ExtResource( 4 )]
+
+[node name="MissileController" type="Node" parent="."]
+script = ExtResource( 8 )
+Missile = ExtResource( 13 )
+Spacecraft = ExtResource( 10 )
+Smartbomb = ExtResource( 14 )
+
+[node name="WaveTimer" type="Timer" parent="MissileController"]
+wait_time = 2.5
+
+[node name="PlaneTimer" type="Timer" parent="MissileController"]
+wait_time = 3.0
+
+[node name="SmartbombTimer" type="Timer" parent="MissileController"]
+wait_time = 4.0
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="Explosion" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource( 9 )
+
+[node name="CannonController" type="Node" parent="."]
+script = ExtResource( 12 )
+Cannon = ExtResource( 6 )
+
+[node name="HUD" parent="." instance=ExtResource( 7 )]
+
+[node name="StartWaveTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="EndWaveTimer" type="Timer" parent="."]
+
+[node name="MissileCountTimer" type="Timer" parent="."]
+wait_time = 0.12
+
+[node name="CityCountTimer" type="Timer" parent="."]
+wait_time = 0.24
+
+[node name="EndOfRoundTimer" type="Timer" parent="."]
+
+[node name="GameOverTimer" type="Timer" parent="."]
+wait_time = 1.4
+
+[node name="CityCreationTimer" type="Timer" parent="."]
+
+[node name="CityCreationAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 16 )
+
+[connection signal="no_cities" from="CityController" to="." method="_on_CityCreator_no_cities"]
+[connection signal="wave_complete" from="MissileController" to="." method="_on_MissileController_wave_complete"]
+[connection signal="timeout" from="MissileController/WaveTimer" to="MissileController" method="_on_WaveTimer_timeout"]
+[connection signal="timeout" from="MissileController/PlaneTimer" to="MissileController" method="_on_PlaneTimer_timeout"]
+[connection signal="timeout" from="MissileController/SmartbombTimer" to="MissileController" method="_on_SmartbombTimer_timeout"]
+[connection signal="timeout" from="StartWaveTimer" to="." method="_on_StartWaveTimer_timeout"]
+[connection signal="timeout" from="EndWaveTimer" to="." method="_on_EndWaveTimer_timeout"]
+[connection signal="timeout" from="MissileCountTimer" to="." method="_on_MissileCountTimer_timeout"]
+[connection signal="timeout" from="CityCountTimer" to="." method="_on_CityCountTimer_timeout"]
+[connection signal="timeout" from="EndOfRoundTimer" to="." method="_on_EndOfRoundTimer_timeout"]
+[connection signal="timeout" from="GameOverTimer" to="." method="_on_GameOverTimer_timeout"]
+[connection signal="timeout" from="CityCreationTimer" to="." method="_on_CityCreationTimer_timeout"]

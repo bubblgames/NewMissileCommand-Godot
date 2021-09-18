@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/LowAmmo.wav-9a269b158c08bea0b6551323bfa2064b.sample"
+
+[deps]
+
+source_file="res://src/MainGame/Entities/Cannon/LowAmmo.wav"
+dest_files=[ "res://.import/LowAmmo.wav-9a269b158c08bea0b6551323bfa2064b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
